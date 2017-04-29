@@ -25,6 +25,7 @@
 #####################################################################
 import base64
 import json
+import ast
 import logging
 import os
 import re
@@ -3623,6 +3624,7 @@ class DeviceResourceMixin(object):
 
     def dehydrate(self, bundle):
         bundle = super(DeviceResourceMixin, self).dehydrate(bundle)
+        bundle.data['attributes'] = ast.literal_eval(bundle.data['attributes'])
         if self.is_webclient(bundle.request):
             bundle.data['vm'] = str(bundle.obj.vm)
         return bundle
